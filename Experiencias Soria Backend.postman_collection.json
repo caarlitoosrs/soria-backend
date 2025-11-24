@@ -1,0 +1,366 @@
+{
+	"info": {
+		"_postman_id": "b771207a-4565-4705-b528-51b83fad0879",
+		"name": "Experiencias Soria Backend",
+		"description": "Colección completa de endpoints del backend Experiencias Soria",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31561363",
+		"_collection_link": "https://cromete.postman.co/workspace/NoMasWordpress~655e9ac6-f055-4041-b445-b0f97293e334/collection/31561363-b771207a-4565-4705-b528-51b83fad0879?action=share&source=collection_link&creator=31561363"
+	},
+	"item": [
+		{
+			"name": "🔐 Auth",
+			"item": [
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Carlos\",\n  \"email\": \"carlos@example.com\",\n  \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"carlos@example.com\",\n  \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuario autenticado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🧭 Experiencias",
+			"item": [
+				{
+					"name": "Listar experiencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalle experiencia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear experiencia (ADMIN)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Museo Numantino\",\n  \"descripcion\": \"Museo arqueológico con piezas celtíberas y romanas\",\n  \"categoria\": \"MUSEO\",\n  \"imagenPortadaUrl\": \"https://example.com/museo.jpg\",\n  \"direccion\": \"Paseo del Espolón, 8, Soria\",\n  \"ubicacionLat\": 41.7667,\n  \"ubicacionLng\": -2.4667\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generar UID (ADMIN)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}/generar-uid?cantidad=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}",
+								"generar-uid"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🎫 Pasaporte",
+			"item": [
+				{
+					"name": "Ver pasaporte del usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/pasaporte",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pasaporte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar experiencia desde QR",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uidScaneado\": \"a1b2c3d4e5\",\n  \"opinion\": \"Una experiencia increíble.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/pasaporte/registrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pasaporte",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "💬 Comentarios",
+			"item": [
+				{
+					"name": "Listar comentarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}/comentarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}",
+								"comentarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear comentario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"texto\": \"Muy buena experiencia, volveré.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}/comentarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}",
+								"comentarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🏆 Top usuarios",
+			"item": [
+				{
+					"name": "Ver ranking de usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"top"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
