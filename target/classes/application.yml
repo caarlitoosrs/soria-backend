@@ -3,29 +3,29 @@ spring:
     name: experiencias-soria-backend
 
   datasource:
-    url: jdbc:mysql://localhost:3306/soria?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: root
-    password:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:soria}?useSSL=${MYSQL_USE_SSL:false}&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 logging:
   level:
-    root: INFO
-    org.springframework.security: INFO
+    root: ${LOG_LEVEL:INFO}
+    org.springframework.security: ${LOG_LEVEL_SECURITY:INFO}
 
 # Propiedades de la app
 app:
-  jwt-secret: "estaesunaclavesuperseguraylargaparafirmartokensjwt"
-  jwt-expiration: 3600000 # 1 hora
+  jwt-secret: ${JWT_SECRET:estaesunaclavesuperseguraylargaparafirmartokensjwt}
+  jwt-expiration: ${JWT_EXPIRATION:3600000} # 1 hora en milisegundos
 
