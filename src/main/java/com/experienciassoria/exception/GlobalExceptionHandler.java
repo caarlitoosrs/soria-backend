@@ -60,6 +60,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(
             IllegalArgumentException ex, HttpServletRequest request) {
+        // Si es un error de conversión de UUID, dar un mensaje más claro
+        String message = ex.getMessage();
+        if (message != null && (message.contains("UUID") || message.contains("Invalid UUID"))) {
+            ErrorResponse error = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "ID inválido",
+                    "El formato del ID no es válido. Debe ser un UUID válido.",
+                    request.getRequestURI()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+        
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Argumento inválido",
