@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("GET", "/api/experiencias/uid/{uid}").permitAll()
                 .requestMatchers("GET", "/api/experiencias/{id}/comentarios").permitAll()
                 .requestMatchers("GET", "/api/top").permitAll()
+                .requestMatchers("/api/public/admin/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 // Endpoints que requieren autenticación (USER o ADMIN - con JWT)
                 .requestMatchers("/api/auth/me").authenticated()

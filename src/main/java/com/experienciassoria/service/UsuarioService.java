@@ -179,5 +179,33 @@ public class UsuarioService {
                         c.getFecha()))
                 .collect(Collectors.toList());
     }
+
+    // 🔹 Hacer admin a un usuario (público, sin JWT)
+    @Transactional
+    public UsuarioDetailDTO makeAdmin(UUID id) {
+        log.info("Haciendo admin al usuario: {}", id);
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        usuario.setRole(Usuario.Rol.ADMIN);
+        usuarioRepository.save(usuario);
+        log.info("Usuario {} ahora es ADMIN", id);
+
+        // Recalcular estadísticas
+        long totalExperiencias = registroRepository.findByUsuario(usuario).size();
+        long totalComentarios = comentarioRepository.findByUsuarioOrderByFechaDesc(usuario).size();
+
+        return new UsuarioDetailDTO(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getEmail(),
+                usuario.getRole().name(),
+                usuario.getPuntos(),
+                usuario.getFechaCreacion(),
+                usuario.isActivo(),
+                totalExperiencias,
+                totalComentarios);
+    }
 }
+
 

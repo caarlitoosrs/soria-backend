@@ -13,3 +13,4 @@ public class ActualizarUsuarioRequest {
     private Boolean activo;
 }
 
+

@@ -20,3 +20,4 @@ public class UsuarioDetailDTO {
     private long totalComentarios;
 }
 
+
