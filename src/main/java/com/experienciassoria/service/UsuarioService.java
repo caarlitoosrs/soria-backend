@@ -180,16 +180,16 @@ public class UsuarioService {
                 .collect(Collectors.toList());
     }
 
-    // 🔹 Hacer admin a un usuario (público, sin JWT)
+    // 🔹 Hacer admin a un usuario por email (público, sin JWT)
     @Transactional
-    public UsuarioDetailDTO makeAdmin(UUID id) {
-        log.info("Haciendo admin al usuario: {}", id);
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+    public UsuarioDetailDTO makeAdminByEmail(String email) {
+        log.info("Haciendo admin al usuario con email: {}", email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con email: " + email));
 
         usuario.setRole(Usuario.Rol.ADMIN);
         usuarioRepository.save(usuario);
-        log.info("Usuario {} ahora es ADMIN", id);
+        log.info("Usuario {} (email: {}) ahora es ADMIN", usuario.getId(), email);
 
         // Recalcular estadísticas
         long totalExperiencias = registroRepository.findByUsuario(usuario).size();
