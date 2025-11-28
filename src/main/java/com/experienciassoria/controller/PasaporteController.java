@@ -1,9 +1,11 @@
 package com.experienciassoria.controller;
 
 import com.experienciassoria.dto.pasaporte.*;
+import com.experienciassoria.exception.ValidationException;
 import com.experienciassoria.security.JwtUtils;
 import com.experienciassoria.service.PasaporteService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ public class PasaporteController {
     // 🔹 GET /api/pasaporte — devuelve el pasaporte del usuario autenticado
     @GetMapping
     public ResponseEntity<PasaporteDTO> getPasaporte(HttpServletRequest request) {
-        String token = extractToken(request);
+        String token = jwtUtils.extractTokenFromRequest(request);
         String email = jwtUtils.getEmailFromToken(token);
 
         UUID usuarioId = pasaporteService
@@ -38,9 +40,9 @@ public class PasaporteController {
     @PostMapping("/registrar")
     public ResponseEntity<RegistroExperienciaDTO> registrarExperiencia(
             HttpServletRequest request,
-            @RequestBody RegistroRequest registroRequest
+            @Valid @RequestBody RegistroRequest registroRequest
     ) {
-        String token = extractToken(request);
+        String token = jwtUtils.extractTokenFromRequest(request);
         String email = jwtUtils.getEmailFromToken(token);
 
         UUID usuarioId = pasaporteService
@@ -48,14 +50,5 @@ public class PasaporteController {
         RegistroExperienciaDTO registro = pasaporteService.registrarExperiencia(usuarioId, registroRequest);
 
         return ResponseEntity.ok(registro);
-    }
-
-    // Extraer token del header
-    private String extractToken(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header == null || !header.startsWith("Bearer ")) {
-            throw new RuntimeException("Token no encontrado o inválido");
-        }
-        return header.substring(7);
     }
 }

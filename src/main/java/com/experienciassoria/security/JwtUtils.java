@@ -2,6 +2,7 @@ package com.experienciassoria.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -52,5 +53,14 @@ public class JwtUtils {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    // Extraer token del header Authorization
+    public String extractTokenFromRequest(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        if (header == null || !header.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Token no encontrado o inválido");
+        }
+        return header.substring(7);
     }
 }

@@ -3,6 +3,7 @@ package com.experienciassoria.dto.experiencia;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -12,5 +13,7 @@ public class ExperienciaListDTO {
     private String titulo;
     private String categoria;
     private String imagenPortadaUrl;
+    private BigDecimal ubicacionLat;
+    private BigDecimal ubicacionLng;
     private boolean visible;
 }

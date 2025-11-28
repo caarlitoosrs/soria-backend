@@ -159,7 +159,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"titulo\": \"Museo Numantino\",\n  \"descripcion\": \"Museo arqueológico con piezas celtíberas y romanas\",\n  \"categoria\": \"MUSEO\",\n  \"imagenPortadaUrl\": \"https://example.com/museo.jpg\",\n  \"direccion\": \"Paseo del Espolón, 8, Soria\",\n  \"ubicacionLat\": 41.7667,\n  \"ubicacionLng\": -2.4667\n}"
+							"raw": "{\n  \"titulo\": \"Museo Numantino\",\n  \"descripcion\": \"Museo arqueológico con piezas celtíberas y romanas\",\n  \"categoria\": \"MUSEO\",\n  \"imagenPortadaUrl\": \"https://example.com/museo.jpg\",\n  \"direccion\": \"Paseo del Espolón, 8, Soria\",\n  \"ubicacionLat\": 41.7667,\n  \"ubicacionLng\": -2.4667,\n  \"puntosOtorgados\": 10\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/experiencias",
@@ -171,6 +171,115 @@
 							"path": [
 								"api",
 								"experiencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar experiencia (ADMIN)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Museo Numantino Actualizado\",\n  \"puntosOtorgados\": 20\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar experiencia (ADMIN)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener experiencia por UID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/uid/{{uid}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"uid",
+								"{{uid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar UIDs de experiencia (ADMIN)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/experiencias/{{experienciaId}}/uids",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"experiencias",
+								"{{experienciaId}}",
+								"uids"
 							]
 						}
 					},

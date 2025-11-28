@@ -30,6 +30,11 @@ public class Experiencia {
     @Column(name = "imagen_portada_url")
     private String imagenPortadaUrl;
 
+    @ElementCollection
+    @CollectionTable(name = "experiencia_galeria_imagenes", joinColumns = @JoinColumn(name = "experiencia_id"))
+    @Column(name = "imagen_url")
+    private List<String> galeriaImagenes = new ArrayList<>();
+
     @Column(name = "ubicacion_lat")
     private BigDecimal ubicacionLat;
 
@@ -37,6 +42,9 @@ public class Experiencia {
     private BigDecimal ubicacionLng;
 
     private String direccion;
+
+    @Column(name = "puntos_otorgados")
+    private Integer puntosOtorgados = 10;
 
     private boolean visible = true;
 

@@ -1,6 +1,7 @@
 package com.experienciassoria.service;
 
 import com.experienciassoria.dto.comentario.*;
+import com.experienciassoria.exception.ResourceNotFoundException;
 import com.experienciassoria.model.*;
 import com.experienciassoria.repository.*;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ComentarioService {
     // 🔹 Obtener comentarios de una experiencia
     public List<ComentarioDTO> getComentariosByExperiencia(UUID experienciaId) {
         Experiencia experiencia = experienciaRepository.findById(experienciaId)
-                .orElseThrow(() -> new RuntimeException("Experiencia no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Experiencia no encontrada"));
 
         return comentarioRepository.findByExperienciaOrderByFechaDesc(experiencia).stream()
                 .map(c -> new ComentarioDTO(
@@ -43,9 +44,9 @@ public class ComentarioService {
     // 🔹 Crear un nuevo comentario
     public ComentarioDTO crearComentario(UUID usuarioId, UUID experienciaId, CrearComentarioRequest request) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         Experiencia experiencia = experienciaRepository.findById(experienciaId)
-                .orElseThrow(() -> new RuntimeException("Experiencia no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Experiencia no encontrada"));
 
         Comentario comentario = Comentario.builder()
                 .usuario(usuario)
@@ -65,7 +66,7 @@ public class ComentarioService {
 
     public UUID getUsuarioIdByEmail(String email) {
         return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"))
                 .getId();
     }
 

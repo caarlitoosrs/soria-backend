@@ -35,15 +35,26 @@ public class Usuario implements UserDetails {
     private int puntos = 0;
 
     @Column(name = "fecha_creacion")
+    @Builder.Default
     private Instant fechaCreacion = Instant.now();
 
     private boolean activo = true;
+
+    @Column(name = "foto_perfil_url")
+    private String fotoPerfilUrl;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegistroExperiencia> registros = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaCreacion == null) {
+            fechaCreacion = Instant.now();
+        }
+    }
 
     // 🔐 Para JWT / Spring Security
     @Override

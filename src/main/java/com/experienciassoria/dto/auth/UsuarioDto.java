@@ -12,4 +12,5 @@ public class UsuarioDto {
     private String email;
     private String role;
     private int puntos;
+    private String fotoPerfilUrl;
 }

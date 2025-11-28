@@ -4,6 +4,7 @@ import com.experienciassoria.dto.comentario.*;
 import com.experienciassoria.security.JwtUtils;
 import com.experienciassoria.service.ComentarioService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +33,10 @@ public class ComentarioController {
     @PostMapping
     public ResponseEntity<ComentarioDTO> crearComentario(
             @PathVariable UUID experienciaId,
-            @RequestBody CrearComentarioRequest request,
+            @Valid @RequestBody CrearComentarioRequest request,
             HttpServletRequest httpRequest
     ) {
-        String token = httpRequest.getHeader("Authorization").substring(7);
+        String token = jwtUtils.extractTokenFromRequest(httpRequest);
         String email = jwtUtils.getEmailFromToken(token);
         UUID usuarioId = comentarioService.getUsuarioIdByEmail(email); // lo añadimos como helper
 
